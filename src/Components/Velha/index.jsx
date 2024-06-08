@@ -77,6 +77,7 @@ function Velha () {
     return (
         <>
         <h3>JOGO DA VELHA</h3>
+        <h3>Vez do jogador -- {vez}</h3>
         <div id="game">
             {
                 jogadas.map((item, i) => (
@@ -87,7 +88,9 @@ function Velha () {
                 ))
             }
         </div>
-        <h3>Vez do jogador -- {vez}</h3>
+
+        <button id="restartButton" onclick= {() =>{window.location.reload(true)}}>Reiniciar Jogo</button>
+
         </>
         
     )
