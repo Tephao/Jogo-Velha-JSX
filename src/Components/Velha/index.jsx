@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './index.css'
 
 function Velha () {
 
@@ -15,7 +16,7 @@ function Velha () {
             {
                 jogadas.map((item, index) => (
                     <button 
-                    class="buttonGame"
+                    className="buttonGame"
                     onclick="clickDoJogador(${i})"
                     >{item}</button>
                 ))
