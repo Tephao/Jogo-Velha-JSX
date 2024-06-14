@@ -83,13 +83,13 @@ function Velha () {
                 jogadas.map((item, i) => (
                     <button 
                     className="buttonGame"
-                    onclick= {()=>{clickDoJogador(i)}}
+                    onClick= {()=>{clickDoJogador(i)}}
                     >{item}</button>
                 ))
             }
         </div>
 
-        <button id="restartButton" onclick= {() =>{window.location.reload(true)}}>Reiniciar Jogo</button>
+        <button id="restartButton" onClick= {() =>{window.location.reload(true)}}>Reiniciar Jogo</button>
 
         </>
         
