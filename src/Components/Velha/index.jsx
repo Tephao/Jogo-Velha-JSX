@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import './index.css'
 
 function Velha () {
@@ -11,16 +11,27 @@ function Velha () {
 
     const [gameover, setGameover] = useState (false);
     const [vez, setVez] = useState ('X');
+    const [status, setStatus] = useState('Vez do Jogador X');
 
- /*   //-------------DECLARAÇÕES DA FUNCAO QUE VERIFICA SE A CELULA ESTA VAZIA------
+    useEffect(()=>{
+        verificaVencedor();
+    },[jogadas])
+
+    //-------------DECLARAÇÕES DA FUNCAO QUE VERIFICA SE A CELULA ESTA VAZIA------
     function verificaCelulas(c1, c2, c3) {
-        return (
+        const ganhou = (
                 jogadas [c1] != '' &&
                 jogadas [c2] != '' &&
                 jogadas [c3] != '' &&
                 jogadas [c1] == jogadas[c2] &&
                 jogadas [c2] == jogadas[c3]
         );
+
+        if (ganhou) {
+            setStatus(`Jogador ${jogadas[c1]} Ganhou !!`)
+        }
+
+        return ganhou;
     }
     //-------------DECLARAÇÕES DA FUNCAO QUEM FOI O VENCEDOR SE AS CELULAS CONTEM O MESMO CARACTER----
     function verificaVencedor() {
@@ -37,16 +48,19 @@ function Velha () {
         verificaCelulas(0,4,8) ||
         verificaCelulas(2,4,6)
        ) {
-       gameover = true;
-       alert('FIM DE JOGO - VENCEDOR JOGADOR >> '+vez);
-       label.innerHTML= "<h3>JOGADOR >> +vez ganhou</h3>";
+            setGameover(true);
        }
-       else if (turnos==10) {                   //VERIFICA SE FEZ TODAS AS VERIFICAÇÕES E CHEGOU NO FIM DOS TURNOS
-                gameover=true;
-                alert('FIM DE JOGO - DEU VELHA');
+
+else{
+       const totalDeJogadas = jogadas.filter(x => x != '').length
+ 
+      if (totalDeJogadas==9) {                   //VERIFICA SE FEZ TODAS AS VERIFICAÇÕES E CHEGOU NO FIM DOS TURNOS
+        setStatus('DEU VELHA !!!')       
+        setGameover(true)
         }
     }
-*/
+    }
+
     //-------------DECLARAÇÕES DA FUNCAO QUANDO O JOGADOR CLICAR EM UMA CELULA------
     function clickDoJogador(index) {    
 
@@ -55,19 +69,19 @@ function Velha () {
             if(jogadas[index]=='') {
             
                 if(vez == 'X') {
-                let novasJogadas = [...jogadas]
-                novasJogadas[index] = vez;
-                setJogadas(novasJogadas)
-              //  verificaVencedor();
-                setVez('O')
+                    let novasJogadas = [...jogadas]
+                    novasJogadas[index] = vez;
+                    setJogadas(novasJogadas)          
+                    setVez('O')
+                    setStatus('Vez do jogador O')
             }
     
             else {
                 let novasJogadas = [...jogadas]
                 novasJogadas[index] = vez;
                 setJogadas(novasJogadas)
-             //   verificaVencedor();
                 setVez('X')
+                setStatus('Vez do jogador X')
             }
         }
     }
@@ -76,8 +90,8 @@ function Velha () {
 
     return (
         <>
-        <h3>JOGO DA VELHA</h3>
-        <h3>Vez do jogador -- {vez}</h3>
+        <h2>JOGO DA VELHA</h2>
+        <h3 id="status">{status}</h3>
         <div id="game">
             {
                 jogadas.map((item, i) => (
